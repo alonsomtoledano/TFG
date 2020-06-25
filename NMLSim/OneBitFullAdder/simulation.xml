@@ -1,0 +1,698 @@
+<!-- ALL measures of time are in nanoseconds and ALL metric measures are in nanometers -->
+<!-- This is the main circuit properties, such as technology, engine and others -->
+<!-- Each engine had different properties to be setted in this field -->
+<circuit>
+	<!-- There are 2 engines: LLG and Behaviour. There is only iNML technology for now -->
+	<property technology="iNML" engine="LLG"/>
+	<!-- There are two possible different methods for the LLG engine, the RK4 and the RKW2 - Runge Kutta 4th order and Runge Kutta Weak 2nd order -->
+	<!-- Be mindfull that the RK4 method disconsiders the temperature -->
+	<property method="RK4"/>
+	<!-- There are 4 simulationMode: exaustive, direct, repetitive and verbose -->
+	<property simulationMode="verbose"/>
+	<!-- The number of simulations to be done in the repetitive mode -->
+	<property repetitions="35"/>
+	<!-- The report time step. Starting at time 0, the program reports at each reportStep. Only used in verbose mode -->
+	<property reportStep="0.1"/>
+	<!-- Gilbert damping factor -->
+	<property alpha="0.05"/>
+	<!-- Saturation Magnetization in A/m -->
+	<property Ms="800000"/>
+	<!-- Temperature in K. Be mindfull that the RK-Weak order 2.0 (RKW2) is used for T > 0 and the RK of fourth order (RK4) for T == 0 -->
+	<property temperature="300"/>
+	<!-- Discretization of time in nanoseconds. It's highly recommended using very low timeStep -->
+	<property timeStep="0.0001"/>
+	<!-- Simulation Duration in nanoseconds -->
+	<property simTime="65"/>
+	<!-- Properties for the heavy material for spin hall effect -->
+	<property spinAngle="0.4"/>
+	<property spinDifusionLenght="3.5"/>
+	<!-- Thickness in nanometers -->
+	<property heavyMaterialThickness="5"/>
+	<!-- Radius of the considered neighborhood. We recomend using values of 300 for more efficciency. -->
+	<property neighborhoodRatio="300"/>
+</circuit>
+
+<!-- This is the clock phases properties -->
+<clockPhase>
+	<!-- Each clock phase must be an item -->
+	<!-- Each clock phase must have a different name, which can be whatever name -->
+	<!-- The format for RKW2 uses a clock signal with 6 values. The 3 first are external field (x,y,z) and the 3 last are current field (x,y,z) -->
+	<!-- Users can use both an external field and a current field with LLG. In order to not use one of them, just leave its fields as 0 -->
+	<!-- The format for the Behaviour engine uses only one value for clock signal. The value corresponds to a field applied on x direction -->
+	<!-- The value for signal in the Behaviour engine needs to be in the [0,1] interval, where 0 represents no clock and 1 represents 100% force -->
+	<!-- Phases can have different durations, but be mindfull of their sincronization -->
+	<item name="reset">
+		<property initialSignal="0,0,0,0,0,0,"/>
+		<property endSignal="300,0,0,0,0,0,"/>
+		<property duration="5"/>
+	</item>
+	<item name="relax">
+		<property initialSignal="300,0,0,0,0,0,"/>
+		<property endSignal="300,0,0,0,0,0,"/>
+		<property duration="5"/>
+	</item>
+	<item name="switch">
+		<property initialSignal="300,0,0,0,0,0,"/>
+		<property endSignal="0,0,0,0,0,0,"/>
+		<property duration="5"/>
+	</item>
+	<item name="hold">
+		<property initialSignal="0,0,0,0,0,0,"/>
+		<property endSignal="0,0,0,0,0,0,"/>
+		<property duration="5"/>
+	</item>
+	<item name="negSwitch">
+		<property initialSignal="-300,0,0,0,0,0,"/>
+		<property endSignal="0,0,0,0,0,0,"/>
+		<property duration="5"/>
+	</item>
+	<item name="negRelax">
+		<property initialSignal="-300,0,0,0,0,0,"/>
+		<property endSignal="-300,0,0,0,0,0,"/>
+		<property duration="5"/>
+	</item>
+	<item name="negReset">
+		<property initialSignal="0,0,0,0,0,0,"/>
+		<property endSignal="-300,0,0,0,0,0,"/>
+		<property duration="5"/>
+	</item>
+	<item name="hold4phases">
+		<property initialSignal="0,0,0,0,0,0,"/>
+		<property endSignal="0,0,0,0,0,0,"/>
+		<property duration="2000"/>
+	</item>
+</clockPhase>
+
+<!-- This is the clock zone properties -->
+<clockZone>
+	<!-- Each clock zone must be an item -->
+	<!-- Each clock zone must have an integer numerical name, starting in 0 and following growing sequence (0,1,2,3,etc) -->
+	<!-- All phases that a zone percieve must be listed -->
+	<!-- The order of the phases matter a lot, since the zone will start with the first phase and follow the order from top to bottom -->
+	<!-- The order of the phases are ciclycal, which means the first phase start again after the end of the last one -->
+	<item name="0">
+		<property phase="reset">
+		<property phase="relax">
+		<property phase="switch">
+		<property phase="hold">
+	</item>
+	<item name="1">
+		<property phase="hold">
+		<property phase="reset">
+		<property phase="relax">
+		<property phase="switch">
+	</item>
+	<item name="2">
+		<property phase="switch">
+		<property phase="hold">
+		<property phase="reset">
+		<property phase="relax">
+	</item>
+	<item name="3">
+		<property phase="relax">
+		<property phase="switch">
+		<property phase="hold">
+		<property phase="reset">
+	</item>
+	<item name="4">
+		<property phase="relax">
+		<property phase="switch">
+		<property phase="hold4phases">
+		<property phase="reset">
+	</item>
+	<item name="5">
+		<property phase="negRelax">
+		<property phase="negSwitch">
+		<property phase="hold4phases">
+		<property phase="negReset">
+	</item>
+</clockZone>
+<!-- This is the components properties -->
+<components>
+	<!-- List here all different geometries of magnets in the circuit -->	<!-- This part also is used to determine if a magnet is fixed or not -->
+	<!-- Each different geometry must be an item -->
+	<!-- Each geometry must have a unique name, which can be whatever -->
+	<item name="component_0">
+		<property width="50"/>
+		<property height="150"/>
+		<property thickness="15"/>
+		<property topCut="20.0"/>
+		<property bottomCut="-0.0"/>
+	</item>
+	<item name="component_1">
+		<property width="50"/>
+		<property height="150"/>
+		<property thickness="15"/>
+		<property topCut="-35"/>
+		<property bottomCut="-35"/>
+	</item>
+	<item name="component_2">
+		<property width="60"/>
+		<property height="150"/>
+		<property thickness="15"/>
+		<property topCut="10"/>
+		<property bottomCut="010"/>
+	</item>
+	<item name="component_3">
+		<property width="60"/>
+		<property height="150"/>
+		<property thickness="15"/>
+		<property topCut="-10"/>
+		<property bottomCut="-10"/>
+	</item>
+	<item name="component_4">
+		<property width="50"/>
+		<property height="140"/>
+		<property thickness="15"/>
+		<property topCut="-35"/>
+		<property bottomCut="-35"/>
+	</item>
+	<item name="component_5">
+		<property width="50"/>
+		<property height="150"/>
+		<property thickness="15"/>
+		<property topCut="35"/>
+		<property bottomCut="35"/>
+	</item>
+	<item name="component_6">
+		<property width="50"/>
+		<property height="125"/>
+		<property thickness="15"/>
+		<property topCut="0"/>
+		<property bottomCut="0"/>
+	</item>
+	<item name="component_7">
+		<property width="50"/>
+		<property height="140"/>
+		<property thickness="15"/>
+		<property topCut="25"/>
+		<property bottomCut="25"/>
+	</item>
+	<item name="component_8">
+		<property width="50"/>
+		<property height="125"/>
+		<property thickness="15"/>
+		<property topCut="20"/>
+		<property bottomCut="20"/>
+	</item>
+	<item name="component_9">
+		<property width="50"/>
+		<property height="140"/>
+		<property thickness="15"/>
+		<property topCut="0"/>
+		<property bottomCut="0"/>
+	</item>
+	<item name="component_10">
+		<property width="60"/>
+		<property height="150"/>
+		<property thickness="15"/>
+		<property topCut="0"/>
+		<property bottomCut="0"/>
+	</item>
+	<item name="component_11">
+		<property width="50"/>
+		<property height="100"/>
+		<property thickness="15"/>
+		<property topCut="15.0"/>
+		<property bottomCut="15.0"/>
+	</item>
+	<item name="component_12">
+		<property width="50"/>
+		<property height="100"/>
+		<property thickness="15"/>
+		<property topCut="15"/>
+		<property bottomCut="15"/>
+	</item>
+	<item name="component_13">
+		<property width="50"/>
+		<property height="100"/>
+		<property thickness="15"/>
+		<property topCut="0"/>
+		<property bottomCut="0"/>
+	</item>
+	<item name="component_14">
+		<property width="50"/>
+		<property height="100"/>
+		<property thickness="15"/>
+		<property topCut="10"/>
+		<property bottomCut="10"/>
+	</item>
+	<item name="component_15">
+		<property width="50"/>
+		<property height="150"/>
+		<property thickness="15"/>
+		<property topCut="0"/>
+		<property bottomCut="0"/>
+	</item>
+	<item name="component_16">
+		<property width="50"/>
+		<property height="120"/>
+		<property thickness="15"/>
+		<property topCut="0"/>
+		<property bottomCut="0"/>
+	</item>
+	<item name="component_17">
+		<property width="50"/>
+		<property height="140"/>
+		<property thickness="15"/>
+		<property topCut="-25"/>
+		<property bottomCut="-25"/>
+	</item>
+	<item name="component_18">
+		<property width="50"/>
+		<property height="150"/>
+		<property thickness="15"/>
+		<property topCut="25"/>
+		<property bottomCut="25"/>
+	</item>
+</components>
+<!-- This is the design properties -->
+<design>
+	<!-- List here all magnets of the circuit. Note that the geometry section does not insert any magnet in the circuit! -->
+	<!-- Each magnet must be an item -->
+	<!-- Each magnet must have a unique name, which can be whatever -->
+	<item name="Input_A_1">
+		<property component="component_0"/>
+		<property myType="input"/>
+		<property fixedMagnetization="false"/>
+		<property position="1780.0,1474.0,"/>
+		<property clockZone="4"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Input_B_1">
+		<property component="component_0"/>
+		<property myType="input"/>
+		<property fixedMagnetization="false"/>
+		<property position="1920.0,1126.0,"/>
+		<property clockZone="5"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Input_Cin">
+		<property component="component_0"/>
+		<property myType="input"/>
+		<property fixedMagnetization="false"/>
+		<property position="1850.0,778.0,"/>
+		<property clockZone="5"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="InputA">
+		<property component="component_0"/>
+		<property myType="input"/>
+		<property fixedMagnetization="false"/>
+		<property position="1850.0,82.0,"/>
+		<property clockZone="4"/>
+		<property magnetization="0.99,0.141,0"/>
+	</item>
+	<item name="Magnet_145_15">
+		<property component="component_1"/>
+		<property myType="regular"/>
+		<property fixedMagnetization="false"/>
+		<property position="1990.0,604.0"/>
+		<property clockZone="2"/>
+		<property magnetization="0.99,0.141,0"/>
+	</item>
+	<item name="Magnet_145_18">
+		<property component="component_2"/>
+		<property myType="input"/>
+		<property fixedMagnetization="false"/>
+		<property position="1990.0,778.0,"/>
+		<property clockZone="1"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_145_19">
+		<property component="component_3"/>
+		<property myType="input"/>
+		<property fixedMagnetization="false"/>
+		<property position="2060.0,778.0,"/>
+		<property clockZone="2"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_145_31">
+		<property component="component_4"/>
+		<property myType="regular"/>
+		<property fixedMagnetization="false"/>
+		<property position="2130.0,1126.0,"/>
+		<property clockZone="0"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_145_33">
+		<property component="component_5"/>
+		<property myType="regular"/>
+		<property fixedMagnetization="false"/>
+		<property position="2060.0,952.0"/>
+		<property clockZone="3"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_145_35">
+		<property component="component_5"/>
+		<property myType="regular"/>
+		<property fixedMagnetization="false"/>
+		<property position="2060.0,1300.0"/>
+		<property clockZone="3"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_145_37">
+		<property component="component_3"/>
+		<property myType="regular"/>
+		<property fixedMagnetization="false"/>
+		<property position="2060.0,1474.0,"/>
+		<property clockZone="2"/>
+		<property magnetization="0.99,0.141,0"/>
+	</item>
+	<item name="Magnet_145_4">
+		<property component="component_1"/>
+		<property myType="regular"/>
+		<property fixedMagnetization="false"/>
+		<property position="1990.0,256.0"/>
+		<property clockZone="2"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_145_6">
+		<property component="component_4"/>
+		<property myType="regular"/>
+		<property fixedMagnetization="false"/>
+		<property position="1920.0,430.0"/>
+		<property clockZone="2"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_145_8">
+		<property component="component_1"/>
+		<property myType="regular"/>
+		<property fixedMagnetization="false"/>
+		<property position="2060.0,430.0"/>
+		<property clockZone="3"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_145_9">
+		<property component="component_6"/>
+		<property myType="regular"/>
+		<property fixedMagnetization="false"/>
+		<property position="2130.0,430.0"/>
+		<property clockZone="3"/>
+		<property magnetization="0.99,0.141,0"/>
+	</item>
+	<item name="Magnet_147">
+		<property component="component_7"/>
+		<property myType="regular"/>
+		<property fixedMagnetization="false"/>
+		<property position="1990.0,1126.0,"/>
+		<property clockZone="3"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_148">
+		<property component="component_8"/>
+		<property myType="input"/>
+		<property fixedMagnetization="false"/>
+		<property position="1990.0,1474.0"/>
+		<property clockZone="1"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_149">
+		<property component="component_6"/>
+		<property myType="input"/>
+		<property fixedMagnetization="false"/>
+		<property position="1920.0,1474.0"/>
+		<property clockZone="0"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_154">
+		<property component="component_9"/>
+		<property myType="input"/>
+		<property fixedMagnetization="false"/>
+		<property position="1850.0,1474.0,"/>
+		<property clockZone="0"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_155">
+		<property component="component_10"/>
+		<property myType="input"/>
+		<property fixedMagnetization="false"/>
+		<property position="1990.0,82.0,"/>
+		<property clockZone="1"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_157">
+		<property component="component_11"/>
+		<property myType="input"/>
+		<property fixedMagnetization="false"/>
+		<property position="1920.0,82.0"/>
+		<property clockZone="0"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_158">
+		<property component="component_12"/>
+		<property myType="input"/>
+		<property fixedMagnetization="false"/>
+		<property position="1920.0,778.0,"/>
+		<property clockZone="0"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_159">
+		<property component="component_9"/>
+		<property myType="regular"/>
+		<property fixedMagnetization="false"/>
+		<property position="2200.0,430.0,"/>
+		<property clockZone="0"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_161">
+		<property component="component_6"/>
+		<property myType="input"/>
+		<property fixedMagnetization="false"/>
+		<property position="2270.0,430.0"/>
+		<property clockZone="0"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_165_0">
+		<property component="component_6"/>
+		<property myType="input"/>
+		<property fixedMagnetization="false"/>
+		<property position="2480.0,430.0"/>
+		<property clockZone="2"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_165_10">
+		<property component="component_1"/>
+		<property myType="regular"/>
+		<property fixedMagnetization="false"/>
+		<property position="2620.0,604.0"/>
+		<property clockZone="0"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_165_11">
+		<property component="component_10"/>
+		<property myType="input"/>
+		<property fixedMagnetization="false"/>
+		<property position="2620.0,430.0"/>
+		<property clockZone="3"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_165_12">
+		<property component="component_13"/>
+		<property myType="input"/>
+		<property fixedMagnetization="false"/>
+		<property position="2550.0,430.0"/>
+		<property clockZone="2"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_165_1">
+		<property component="component_6"/>
+		<property myType="input"/>
+		<property fixedMagnetization="false"/>
+		<property position="2550.0,1126.0"/>
+		<property clockZone="2"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_165_2">
+		<property component="component_10"/>
+		<property myType="input"/>
+		<property fixedMagnetization="false"/>
+		<property position="2620.0,1126.0"/>
+		<property clockZone="3"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_165_3">
+		<property component="component_1"/>
+		<property myType="regular"/>
+		<property fixedMagnetization="false"/>
+		<property position="2620.0,952.0"/>
+		<property clockZone="0"/>
+		<property magnetization="0.99,0.141,0"/>
+	</item>
+	<item name="Magnet_165_5">
+		<property component="component_1"/>
+		<property myType="regular"/>
+		<property fixedMagnetization="false"/>
+		<property position="2690.0,778.0"/>
+		<property clockZone="1"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_165_7">
+		<property component="component_4"/>
+		<property myType="regular"/>
+		<property fixedMagnetization="false"/>
+		<property position="2550.0,778.0"/>
+		<property clockZone="0"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_165_8">
+		<property component="component_13"/>
+		<property myType="regular"/>
+		<property fixedMagnetization="false"/>
+		<property position="2480.0,778.0,"/>
+		<property clockZone="3"/>
+		<property magnetization="0.99,0.141,0"/>
+	</item>
+	<item name="Magnet_165_9">
+		<property component="component_9"/>
+		<property myType="input"/>
+		<property fixedMagnetization="false"/>
+		<property position="2480.0,1126.0,"/>
+		<property clockZone="2"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_166_0">
+		<property component="component_13"/>
+		<property myType="input"/>
+		<property fixedMagnetization="false"/>
+		<property position="2410.0,430.0"/>
+		<property clockZone="1"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_166_1">
+		<property component="component_6"/>
+		<property myType="input"/>
+		<property fixedMagnetization="false"/>
+		<property position="2340.0,430.0"/>
+		<property clockZone="1"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_167_0">
+		<property component="component_13"/>
+		<property myType="input"/>
+		<property fixedMagnetization="false"/>
+		<property position="2410.0,1126.0"/>
+		<property clockZone="1"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_167_1">
+		<property component="component_6"/>
+		<property myType="input"/>
+		<property fixedMagnetization="false"/>
+		<property position="2340.0,1126.0,"/>
+		<property clockZone="1"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_168">
+		<property component="component_14"/>
+		<property myType="regular"/>
+		<property fixedMagnetization="false"/>
+		<property position="2130.0,778.0,"/>
+		<property clockZone="3"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_169">
+		<property component="component_6"/>
+		<property myType="regular"/>
+		<property fixedMagnetization="false"/>
+		<property position="2200.0,778.0"/>
+		<property clockZone="0"/>
+		<property magnetization="0.99,0.141,0"/>
+	</item>
+	<item name="Magnet_170">
+		<property component="component_6"/>
+		<property myType="input"/>
+		<property fixedMagnetization="false"/>
+		<property position="2410.0,778.0"/>
+		<property clockZone="2"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_171">
+		<property component="component_15"/>
+		<property myType="input"/>
+		<property fixedMagnetization="false"/>
+		<property position="2305,778.0,"/>
+		<property clockZone="1"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_181_0">
+		<property component="component_16"/>
+		<property myType="output"/>
+		<property fixedMagnetization="false"/>
+		<property position="2760.0,430.0,"/>
+		<property clockZone="1"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_181_1">
+		<property component="component_16"/>
+		<property myType="input"/>
+		<property fixedMagnetization="false"/>
+		<property position="2690.0,430.0"/>
+		<property clockZone="0"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_186">
+		<property component="component_13"/>
+		<property myType="output"/>
+		<property fixedMagnetization="false"/>
+		<property position="2830.0,430.0"/>
+		<property clockZone="1"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_187">
+		<property component="component_13"/>
+		<property myType="regular"/>
+		<property fixedMagnetization="false"/>
+		<property position="2200.0,1126.0"/>
+		<property clockZone="0"/>
+		<property magnetization="0.99,0.141,0"/>
+	</item>
+	<item name="Magnet_188">
+		<property component="component_15"/>
+		<property myType="input"/>
+		<property fixedMagnetization="false"/>
+		<property position="2270.0,1126.0,"/>
+		<property clockZone="1"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Magnet_189">
+		<property component="component_0"/>
+		<property myType="input"/>
+		<property fixedMagnetization="false"/>
+		<property position="1850.0,430.0"/>
+		<property clockZone="5"/>
+		<property magnetization="0.99,0.141,0"/>
+	</item>
+	<item name="Maj1_Out">
+		<property component="component_7"/>
+		<property myType="regular"/>
+		<property fixedMagnetization="false"/>
+		<property position="1990.0,430.0,"/>
+		<property clockZone="2"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Maj2_Out">
+		<property component="component_17"/>
+		<property myType="regular"/>
+		<property fixedMagnetization="false"/>
+		<property position="2060.0,1126.0,"/>
+		<property clockZone="3"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Maj3_Out">
+		<property component="component_18"/>
+		<property myType="regular"/>
+		<property fixedMagnetization="false"/>
+		<property position="2620.0,778.0,"/>
+		<property clockZone="0"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Sum">
+		<property component="component_6"/>
+		<property myType="output"/>
+		<property fixedMagnetization="false"/>
+		<property position="2760.0,778.0,"/>
+		<property clockZone="1"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+</design>
