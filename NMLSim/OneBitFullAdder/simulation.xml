@@ -134,101 +134,101 @@
 	<!-- Each geometry must have a unique name, which can be whatever -->
 	<item name="component_0">
 		<property width="50"/>
+		<property height="100"/>
+		<property thickness="15"/>
+		<property topCut="0"/>
+		<property bottomCut="0"/>
+	</item>
+	<item name="component_1">
+		<property width="50"/>
 		<property height="150"/>
 		<property thickness="15"/>
 		<property topCut="20.0"/>
 		<property bottomCut="-0.0"/>
 	</item>
-	<item name="component_1">
+	<item name="component_2">
 		<property width="50"/>
 		<property height="150"/>
 		<property thickness="15"/>
 		<property topCut="-35"/>
 		<property bottomCut="-35"/>
 	</item>
-	<item name="component_2">
+	<item name="component_3">
 		<property width="60"/>
 		<property height="150"/>
 		<property thickness="15"/>
 		<property topCut="10"/>
 		<property bottomCut="010"/>
 	</item>
-	<item name="component_3">
+	<item name="component_4">
 		<property width="60"/>
 		<property height="150"/>
 		<property thickness="15"/>
 		<property topCut="-10"/>
 		<property bottomCut="-10"/>
 	</item>
-	<item name="component_4">
+	<item name="component_5">
 		<property width="50"/>
 		<property height="140"/>
 		<property thickness="15"/>
 		<property topCut="-35"/>
 		<property bottomCut="-35"/>
 	</item>
-	<item name="component_5">
+	<item name="component_6">
 		<property width="50"/>
 		<property height="150"/>
 		<property thickness="15"/>
 		<property topCut="35"/>
 		<property bottomCut="35"/>
 	</item>
-	<item name="component_6">
+	<item name="component_7">
 		<property width="50"/>
 		<property height="125"/>
 		<property thickness="15"/>
 		<property topCut="0"/>
 		<property bottomCut="0"/>
 	</item>
-	<item name="component_7">
+	<item name="component_8">
 		<property width="50"/>
 		<property height="140"/>
 		<property thickness="15"/>
 		<property topCut="25"/>
 		<property bottomCut="25"/>
 	</item>
-	<item name="component_8">
+	<item name="component_9">
 		<property width="50"/>
 		<property height="125"/>
 		<property thickness="15"/>
 		<property topCut="20"/>
 		<property bottomCut="20"/>
 	</item>
-	<item name="component_9">
+	<item name="component_10">
 		<property width="50"/>
 		<property height="140"/>
 		<property thickness="15"/>
 		<property topCut="0"/>
 		<property bottomCut="0"/>
 	</item>
-	<item name="component_10">
+	<item name="component_11">
 		<property width="60"/>
 		<property height="150"/>
 		<property thickness="15"/>
 		<property topCut="0"/>
 		<property bottomCut="0"/>
 	</item>
-	<item name="component_11">
+	<item name="component_12">
 		<property width="50"/>
 		<property height="100"/>
 		<property thickness="15"/>
 		<property topCut="15.0"/>
 		<property bottomCut="15.0"/>
 	</item>
-	<item name="component_12">
+	<item name="component_13">
 		<property width="50"/>
 		<property height="100"/>
 		<property thickness="15"/>
 		<property topCut="15"/>
 		<property bottomCut="15"/>
-	</item>
-	<item name="component_13">
-		<property width="50"/>
-		<property height="100"/>
-		<property thickness="15"/>
-		<property topCut="0"/>
-		<property bottomCut="0"/>
 	</item>
 	<item name="component_14">
 		<property width="50"/>
@@ -271,40 +271,48 @@
 	<!-- List here all magnets of the circuit. Note that the geometry section does not insert any magnet in the circuit! -->
 	<!-- Each magnet must be an item -->
 	<!-- Each magnet must have a unique name, which can be whatever -->
-	<item name="Input_A_1">
+	<item name="Cout">
 		<property component="component_0"/>
-		<property myType="input"/>
+		<property myType="output"/>
 		<property fixedMagnetization="false"/>
+		<property position="2830.0,430.0,"/>
+		<property clockZone="1"/>
+		<property magnetization="0.99,0.141,0,"/>
+	</item>
+	<item name="Input_A_1">
+		<property component="component_1"/>
+		<property myType="input"/>
+		<property fixedMagnetization="true"/>
 		<property position="1780.0,1474.0,"/>
 		<property clockZone="4"/>
-		<property magnetization="0.99,0.141,0,"/>
+		<property magnetization="0.141,0.99,0"/>
 	</item>
 	<item name="Input_B_1">
-		<property component="component_0"/>
+		<property component="component_1"/>
 		<property myType="input"/>
-		<property fixedMagnetization="false"/>
+		<property fixedMagnetization="true"/>
 		<property position="1920.0,1126.0,"/>
 		<property clockZone="5"/>
-		<property magnetization="0.99,0.141,0,"/>
+		<property magnetization="0.141,0.99,0"/>
 	</item>
 	<item name="Input_Cin">
-		<property component="component_0"/>
+		<property component="component_1"/>
 		<property myType="input"/>
-		<property fixedMagnetization="false"/>
+		<property fixedMagnetization="true"/>
 		<property position="1850.0,778.0,"/>
 		<property clockZone="5"/>
-		<property magnetization="0.99,0.141,0,"/>
+		<property magnetization="0.141,0.99,0"/>
 	</item>
 	<item name="InputA">
-		<property component="component_0"/>
+		<property component="component_1"/>
 		<property myType="input"/>
-		<property fixedMagnetization="false"/>
+		<property fixedMagnetization="true"/>
 		<property position="1850.0,82.0,"/>
 		<property clockZone="4"/>
-		<property magnetization="0.99,0.141,0"/>
+		<property magnetization="0.141,0.99,0"/>
 	</item>
 	<item name="Magnet_145_15">
-		<property component="component_1"/>
+		<property component="component_2"/>
 		<property myType="regular"/>
 		<property fixedMagnetization="false"/>
 		<property position="1990.0,604.0"/>
@@ -312,7 +320,7 @@
 		<property magnetization="0.99,0.141,0"/>
 	</item>
 	<item name="Magnet_145_18">
-		<property component="component_2"/>
+		<property component="component_3"/>
 		<property myType="input"/>
 		<property fixedMagnetization="false"/>
 		<property position="1990.0,778.0,"/>
@@ -320,7 +328,7 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Magnet_145_19">
-		<property component="component_3"/>
+		<property component="component_4"/>
 		<property myType="input"/>
 		<property fixedMagnetization="false"/>
 		<property position="2060.0,778.0,"/>
@@ -328,7 +336,7 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Magnet_145_31">
-		<property component="component_4"/>
+		<property component="component_5"/>
 		<property myType="regular"/>
 		<property fixedMagnetization="false"/>
 		<property position="2130.0,1126.0,"/>
@@ -336,7 +344,7 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Magnet_145_33">
-		<property component="component_5"/>
+		<property component="component_6"/>
 		<property myType="regular"/>
 		<property fixedMagnetization="false"/>
 		<property position="2060.0,952.0"/>
@@ -344,7 +352,7 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Magnet_145_35">
-		<property component="component_5"/>
+		<property component="component_6"/>
 		<property myType="regular"/>
 		<property fixedMagnetization="false"/>
 		<property position="2060.0,1300.0"/>
@@ -352,7 +360,7 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Magnet_145_37">
-		<property component="component_3"/>
+		<property component="component_4"/>
 		<property myType="regular"/>
 		<property fixedMagnetization="false"/>
 		<property position="2060.0,1474.0,"/>
@@ -360,7 +368,7 @@
 		<property magnetization="0.99,0.141,0"/>
 	</item>
 	<item name="Magnet_145_4">
-		<property component="component_1"/>
+		<property component="component_2"/>
 		<property myType="regular"/>
 		<property fixedMagnetization="false"/>
 		<property position="1990.0,256.0"/>
@@ -368,7 +376,7 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Magnet_145_6">
-		<property component="component_4"/>
+		<property component="component_5"/>
 		<property myType="regular"/>
 		<property fixedMagnetization="false"/>
 		<property position="1920.0,430.0"/>
@@ -376,7 +384,7 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Magnet_145_8">
-		<property component="component_1"/>
+		<property component="component_2"/>
 		<property myType="regular"/>
 		<property fixedMagnetization="false"/>
 		<property position="2060.0,430.0"/>
@@ -384,7 +392,7 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Magnet_145_9">
-		<property component="component_6"/>
+		<property component="component_7"/>
 		<property myType="regular"/>
 		<property fixedMagnetization="false"/>
 		<property position="2130.0,430.0"/>
@@ -392,7 +400,7 @@
 		<property magnetization="0.99,0.141,0"/>
 	</item>
 	<item name="Magnet_147">
-		<property component="component_7"/>
+		<property component="component_8"/>
 		<property myType="regular"/>
 		<property fixedMagnetization="false"/>
 		<property position="1990.0,1126.0,"/>
@@ -400,7 +408,7 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Magnet_148">
-		<property component="component_8"/>
+		<property component="component_9"/>
 		<property myType="input"/>
 		<property fixedMagnetization="false"/>
 		<property position="1990.0,1474.0"/>
@@ -408,7 +416,7 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Magnet_149">
-		<property component="component_6"/>
+		<property component="component_7"/>
 		<property myType="input"/>
 		<property fixedMagnetization="false"/>
 		<property position="1920.0,1474.0"/>
@@ -416,7 +424,7 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Magnet_154">
-		<property component="component_9"/>
+		<property component="component_10"/>
 		<property myType="input"/>
 		<property fixedMagnetization="false"/>
 		<property position="1850.0,1474.0,"/>
@@ -424,7 +432,7 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Magnet_155">
-		<property component="component_10"/>
+		<property component="component_11"/>
 		<property myType="input"/>
 		<property fixedMagnetization="false"/>
 		<property position="1990.0,82.0,"/>
@@ -432,7 +440,7 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Magnet_157">
-		<property component="component_11"/>
+		<property component="component_12"/>
 		<property myType="input"/>
 		<property fixedMagnetization="false"/>
 		<property position="1920.0,82.0"/>
@@ -440,7 +448,7 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Magnet_158">
-		<property component="component_12"/>
+		<property component="component_13"/>
 		<property myType="input"/>
 		<property fixedMagnetization="false"/>
 		<property position="1920.0,778.0,"/>
@@ -448,7 +456,7 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Magnet_159">
-		<property component="component_9"/>
+		<property component="component_10"/>
 		<property myType="regular"/>
 		<property fixedMagnetization="false"/>
 		<property position="2200.0,430.0,"/>
@@ -456,7 +464,7 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Magnet_161">
-		<property component="component_6"/>
+		<property component="component_7"/>
 		<property myType="input"/>
 		<property fixedMagnetization="false"/>
 		<property position="2270.0,430.0"/>
@@ -464,7 +472,7 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Magnet_165_0">
-		<property component="component_6"/>
+		<property component="component_7"/>
 		<property myType="input"/>
 		<property fixedMagnetization="false"/>
 		<property position="2480.0,430.0"/>
@@ -472,7 +480,7 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Magnet_165_10">
-		<property component="component_1"/>
+		<property component="component_2"/>
 		<property myType="regular"/>
 		<property fixedMagnetization="false"/>
 		<property position="2620.0,604.0"/>
@@ -480,7 +488,7 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Magnet_165_11">
-		<property component="component_10"/>
+		<property component="component_11"/>
 		<property myType="input"/>
 		<property fixedMagnetization="false"/>
 		<property position="2620.0,430.0"/>
@@ -488,7 +496,7 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Magnet_165_12">
-		<property component="component_13"/>
+		<property component="component_0"/>
 		<property myType="input"/>
 		<property fixedMagnetization="false"/>
 		<property position="2550.0,430.0"/>
@@ -496,7 +504,7 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Magnet_165_1">
-		<property component="component_6"/>
+		<property component="component_7"/>
 		<property myType="input"/>
 		<property fixedMagnetization="false"/>
 		<property position="2550.0,1126.0"/>
@@ -504,7 +512,7 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Magnet_165_2">
-		<property component="component_10"/>
+		<property component="component_11"/>
 		<property myType="input"/>
 		<property fixedMagnetization="false"/>
 		<property position="2620.0,1126.0"/>
@@ -512,7 +520,7 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Magnet_165_3">
-		<property component="component_1"/>
+		<property component="component_2"/>
 		<property myType="regular"/>
 		<property fixedMagnetization="false"/>
 		<property position="2620.0,952.0"/>
@@ -520,7 +528,7 @@
 		<property magnetization="0.99,0.141,0"/>
 	</item>
 	<item name="Magnet_165_5">
-		<property component="component_1"/>
+		<property component="component_2"/>
 		<property myType="regular"/>
 		<property fixedMagnetization="false"/>
 		<property position="2690.0,778.0"/>
@@ -528,7 +536,7 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Magnet_165_7">
-		<property component="component_4"/>
+		<property component="component_5"/>
 		<property myType="regular"/>
 		<property fixedMagnetization="false"/>
 		<property position="2550.0,778.0"/>
@@ -536,7 +544,7 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Magnet_165_8">
-		<property component="component_13"/>
+		<property component="component_0"/>
 		<property myType="regular"/>
 		<property fixedMagnetization="false"/>
 		<property position="2480.0,778.0,"/>
@@ -544,7 +552,7 @@
 		<property magnetization="0.99,0.141,0"/>
 	</item>
 	<item name="Magnet_165_9">
-		<property component="component_9"/>
+		<property component="component_10"/>
 		<property myType="input"/>
 		<property fixedMagnetization="false"/>
 		<property position="2480.0,1126.0,"/>
@@ -552,7 +560,7 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Magnet_166_0">
-		<property component="component_13"/>
+		<property component="component_0"/>
 		<property myType="input"/>
 		<property fixedMagnetization="false"/>
 		<property position="2410.0,430.0"/>
@@ -560,7 +568,7 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Magnet_166_1">
-		<property component="component_6"/>
+		<property component="component_7"/>
 		<property myType="input"/>
 		<property fixedMagnetization="false"/>
 		<property position="2340.0,430.0"/>
@@ -568,7 +576,7 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Magnet_167_0">
-		<property component="component_13"/>
+		<property component="component_0"/>
 		<property myType="input"/>
 		<property fixedMagnetization="false"/>
 		<property position="2410.0,1126.0"/>
@@ -576,7 +584,7 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Magnet_167_1">
-		<property component="component_6"/>
+		<property component="component_7"/>
 		<property myType="input"/>
 		<property fixedMagnetization="false"/>
 		<property position="2340.0,1126.0,"/>
@@ -592,7 +600,7 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Magnet_169">
-		<property component="component_6"/>
+		<property component="component_7"/>
 		<property myType="regular"/>
 		<property fixedMagnetization="false"/>
 		<property position="2200.0,778.0"/>
@@ -600,7 +608,7 @@
 		<property magnetization="0.99,0.141,0"/>
 	</item>
 	<item name="Magnet_170">
-		<property component="component_6"/>
+		<property component="component_7"/>
 		<property myType="input"/>
 		<property fixedMagnetization="false"/>
 		<property position="2410.0,778.0"/>
@@ -631,16 +639,8 @@
 		<property clockZone="0"/>
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
-	<item name="Magnet_186">
-		<property component="component_13"/>
-		<property myType="output"/>
-		<property fixedMagnetization="false"/>
-		<property position="2830.0,430.0"/>
-		<property clockZone="1"/>
-		<property magnetization="0.99,0.141,0,"/>
-	</item>
 	<item name="Magnet_187">
-		<property component="component_13"/>
+		<property component="component_0"/>
 		<property myType="regular"/>
 		<property fixedMagnetization="false"/>
 		<property position="2200.0,1126.0"/>
@@ -656,15 +656,15 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Magnet_189">
-		<property component="component_0"/>
+		<property component="component_1"/>
 		<property myType="input"/>
-		<property fixedMagnetization="false"/>
-		<property position="1850.0,430.0"/>
+		<property fixedMagnetization="true"/>
+		<property position="1850.0,430.0,"/>
 		<property clockZone="5"/>
-		<property magnetization="0.99,0.141,0"/>
+		<property magnetization="0.141,0.99,0"/>
 	</item>
 	<item name="Maj1_Out">
-		<property component="component_7"/>
+		<property component="component_8"/>
 		<property myType="regular"/>
 		<property fixedMagnetization="false"/>
 		<property position="1990.0,430.0,"/>
@@ -688,7 +688,7 @@
 		<property magnetization="0.99,0.141,0,"/>
 	</item>
 	<item name="Sum">
-		<property component="component_6"/>
+		<property component="component_7"/>
 		<property myType="output"/>
 		<property fixedMagnetization="false"/>
 		<property position="2760.0,778.0,"/>
