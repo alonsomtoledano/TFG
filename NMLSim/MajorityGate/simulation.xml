@@ -154,7 +154,7 @@
 		<property fixedMagnetization="true"/>
 		<property position="940.0,778.0,"/>
 		<property clockZone="0"/>
-		<property magnetization="0.141,-0.99,0"/>
+		<property magnetization="0.141,0.99,0"/>
 	</item>
 	<item name="B">
 		<property component="component_0"/>
